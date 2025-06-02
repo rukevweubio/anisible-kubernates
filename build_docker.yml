@@ -1,0 +1,25 @@
+---
+- name: Build Docker Image Using Ansible
+  hosts: localhost
+  become: no
+  gather_facts: no
+
+  vars:
+    image_name: mynginx
+    image_tag: latest
+
+  tasks:
+    - name: Build Docker image
+      community.docker.docker_image:
+        build:
+          path: .
+          pull: no
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        source: build
+        push: no
+        archive_path: no
+
+    - name: Show success message
+      ansible.builtin.debug:
+        msg: "Built Docker image {{ image_name }}:{{ image_tag }}"

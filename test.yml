@@ -1,0 +1,7 @@
+---
+- name: Show current host
+  hosts: localhost
+  tasks:
+    - name: Print hostname
+      debug:
+        msg: "Running on host {{ inventory_hostname }}"

@@ -1,0 +1,24 @@
+
+---
+- name: Scale Nginx Deployment using k8s_scale
+  hosts: localhost
+  gather_facts: no
+  vars:
+    replicas: 4
+
+  tasks:
+    - name: Scale nginx-deployment replicas using k8s_scale
+      kubernetes.core.k8s_scale:
+        api_version: apps/v1
+        kind: Deployment
+        name: nginx-deployment
+        namespace: dev
+        replica_count: 4
+        wait: yes
+        wait_timeout: 60
+
+      register: scale_result
+
+    - name: Show result
+      ansible.builtin.debug:
+        msg: "{{ scale_result }}"
